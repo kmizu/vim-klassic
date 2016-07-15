@@ -1,6 +1,6 @@
 fun! s:DetectKlassic()
-    if getline(1) =~# '^#!\(/usr\)\?/bin/env\s\+scalas\?'
-        set filetype=scala
+    if getline(1) =~# '^#!\(/usr\)\?/bin/env\s\+klassics\?'
+        set filetype=klassic
     endif
 endfun
 
