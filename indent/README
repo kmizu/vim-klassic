@@ -1,16 +1,9 @@
-Scala Indent file for Vim
+Klassic Indent file for Vim
 =========================
-
-You can check 'testfile.scala' in this directory to see what I'm testing
-against.  I'm mostly just trying to fit the major conventions that people would
-code in with Scala, and not all of the possibilities - life's too short for that
-and I'd rather be writing Scala code than Vim indent code.
 
 With that said, if there's something you're passionate about and you want it to
 be properly indented, and you can't hack it in yourself, then feel free to drop
 me a line and we'll fight about it.
-
-You'll see the following comments in 'testfile.scala':
 
     /**
      * The following stuff doesn't work, but honestly, it's pretty

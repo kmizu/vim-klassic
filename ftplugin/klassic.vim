@@ -1,7 +1,7 @@
 " Vim filetype plugin
-" Language:             Scala
-" Maintainer:           Derek Wyatt
-" URL:                  https://github.com/derekwyatt/vim-scala
+" Language:             Klassic
+" Maintainer:           Kota Mizushima
+" URL:                  https://github.com/kmizu/vim-klassic
 " License:              Apache 2
 " ----------------------------------------------------------------------------
 
@@ -24,10 +24,8 @@ setlocal shiftwidth=2 softtabstop=2 expandtab
 setlocal include='^\s*import'
 setlocal includeexpr='substitute(v:fname,"\\.","/","g")'
 
-setlocal path+=src/main/scala,src/test/scala
-setlocal suffixesadd=.scala
-
-compiler sbt
+setlocal path+=src/main/klassic,src/test/klassic
+setlocal suffixesadd=.kl
 
 if globpath(&rtp, 'plugin/fuf.vim') != ''
     "
@@ -39,7 +37,7 @@ if globpath(&rtp, 'plugin/fuf.vim') != ''
     " This is really just a convenience function to clean up any stray '/'
     " characters in the path, should they be there.
     "
-    function! scala#SanitizeDirForFuzzyFinder(dir)
+    function! klassic#SanitizeDirForFuzzyFinder(dir)
         let dir = expand(a:dir)
         let dir = substitute(dir, '/\+$', '', '')
         let dir = substitute(dir, '/\+', '/', '')
@@ -57,8 +55,8 @@ if globpath(&rtp, 'plugin/fuf.vim') != ''
     " the advantage of a hint, but just let the user start from wherever he was
     " starting from anyway.
     "
-    function! scala#GetDirForFuzzyFinder(from, addon)
-        let from = scala#SanitizeDirForFuzzyFinder(a:from)
+    function! klassic#GetDirForFuzzyFinder(from, addon)
+        let from = klassic#SanitizeDirForFuzzyFinder(a:from)
         let addon = expand(a:addon)
         let addon = substitute(addon, '^/\+', '', '')
         let found = ''
@@ -99,7 +97,7 @@ if globpath(&rtp, 'plugin/fuf.vim') != ''
                 let tempfrom = globbed
                 let globbed = globpath(tempfrom, '*')
             endwhile
-            let found = scala#SanitizeDirForFuzzyFinder(tempfrom) . '/'
+            let found = klassic#SanitizeDirForFuzzyFinder(tempfrom) . '/'
         else
             let found = from
         endif
@@ -114,8 +112,8 @@ if globpath(&rtp, 'plugin/fuf.vim') != ''
     " really only interested in going down into test/src 90% of the time, so let's
     " hit that 90% and leave the other 10% to couple of extra keystrokes)
     "
-    function! scala#GetTestDirForFuzzyFinder(from)
-        return scala#GetDirForFuzzyFinder(a:from, 'src/test/scala/')
+    function! klassic#GetTestDirForFuzzyFinder(from)
+        return klassic#GetDirForFuzzyFinder(a:from, 'src/test/klassic/')
     endfunction
 
     "
@@ -123,8 +121,8 @@ if globpath(&rtp, 'plugin/fuf.vim') != ''
     "
     " Now overload GetDirForFuzzyFinder() specifically for the main directory.
     "
-    function! scala#GetMainDirForFuzzyFinder(from)
-        return scala#GetDirForFuzzyFinder(a:from, 'src/main/scala/')
+    function! klassic#GetMainDirForFuzzyFinder(from)
+        return klassic#GetDirForFuzzyFinder(a:from, 'src/main/klassic/')
     endfunction
 
     "
@@ -132,17 +130,17 @@ if globpath(&rtp, 'plugin/fuf.vim') != ''
     "
     " Now overload GetDirForFuzzyFinder() specifically for the root directory.
     "
-    function! scala#GetRootDirForFuzzyFinder(from)
-        return scala#GetDirForFuzzyFinder(a:from, 'src/../')
+    function! klassic#GetRootDirForFuzzyFinder(from)
+        return klassic#GetDirForFuzzyFinder(a:from, 'src/../')
     endfunction
 
     " If you want to disable the default key mappings, write the following line in
     " your ~/.vimrc
-    "     let g:scala_use_default_keymappings = 0
-    if get(g:, 'scala_use_default_keymappings', 1)
-      nnoremap <buffer> <silent> <Leader>ft :FufFile <c-r>=scala#GetTestDirForFuzzyFinder('%:p:h')<cr><cr>
-      nnoremap <buffer> <silent> <Leader>fs :FufFile <c-r>=scala#GetMainDirForFuzzyFinder('%:p:h')<cr><cr>
-      nnoremap <buffer> <silent> <Leader>fr :FufFile <c-r>=scala#GetRootDirForFuzzyFinder('%:p:h')<cr><cr>
+    "     let g:klassic_use_default_keymappings = 0
+    if get(g:, 'klassic_use_default_keymappings', 1)
+      nnoremap <buffer> <silent> <Leader>ft :FufFile <c-r>=klassic#GetTestDirForFuzzyFinder('%:p:h')<cr><cr>
+      nnoremap <buffer> <silent> <Leader>fs :FufFile <c-r>=klassic#GetMainDirForFuzzyFinder('%:p:h')<cr><cr>
+      nnoremap <buffer> <silent> <Leader>fr :FufFile <c-r>=klassic#GetRootDirForFuzzyFinder('%:p:h')<cr><cr>
     endif
 endif
 
@@ -156,7 +154,7 @@ function! s:NextSection(backwards)
   else
     let dir = '/'
   endif
-  let keywords = [ 'def', 'class', 'trait', 'object' ]
+  let keywords = [ 'def', 'val', 'mutable', 'if', 'else']
   let keywordsOrExpression = s:CreateOrExpression(keywords)
 
   let modifiers = [ 'public', 'private', 'private\[\w*\]', 'protected', 'abstract', 'case', 'override', 'implicit', 'final', 'sealed']
