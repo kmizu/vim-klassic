@@ -42,7 +42,8 @@ syn keyword klassicKeyword match return throw try while yield macro
 syn keyword klassicKeyword class trait object extends with nextgroup=klassicInstanceDeclaration skipwhite
 syn keyword klassicKeyword case nextgroup=klassicKeyword,klassicCaseFollowing skipwhite
 syn keyword klassicKeyword val nextgroup=klassicNameDefinition,klassicQuasiQuotes skipwhite
-syn keyword klassicKeyword def var nextgroup=klassicNameDefinition skipwhite
+syn keyword klassicKeyword mutable nextgroup=klassicNameDefinition,klassicQuasiQuotes skipwhite
+syn keyword klassicKeyword def nextgroup=klassicNameDefinition skipwhite
 hi link klassicKeyword Keyword
 
 exe 'syn region klassicBlock start=/{/ end=/}/ contains=' . s:ContainedGroup() . ' fold'
