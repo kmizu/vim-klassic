@@ -1,9 +1,7 @@
 vim-klassic
 =========
 
-This is a "bundle" for Vim that builds off of the initial Klassic plugin modules
-by Stefan Matthias Aust and adds some more "stuff" that I find useful, including
-all of my notes and customizations.
+This is a "bundle" for Vim that builds off of the initial Klassic plugin modules.
 
 ##Installation
 
